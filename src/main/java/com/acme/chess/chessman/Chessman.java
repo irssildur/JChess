@@ -3,6 +3,7 @@ package com.acme.chess.chessman;
 import com.acme.chess.chessman.restricted.ChessmanColor;
 import com.acme.chess.chessman.restricted.ChessmanType;
 import com.acme.chess.move.Move;
+import com.acme.chess.move.MoveResult;
 
 /**
  * Simple implementation of the Chessman interface.
@@ -20,8 +21,15 @@ public class Chessman {
         this.color = color;
     }
 
-    public Boolean validate(Move move) {
-        return validator.validate(move);
+    public MoveResult validate(Move move) {
+        
+        MoveResult result = ;
+        try {
+            result = validator.validate(move);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return result;
     }
 
     public ChessmanColor getChessmanColor() {

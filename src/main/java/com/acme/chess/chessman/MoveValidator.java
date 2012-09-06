@@ -1,6 +1,8 @@
 package com.acme.chess.chessman;
 
+import com.acme.chess.move.InvalidMoveException;
 import com.acme.chess.move.Move;
+import com.acme.chess.move.MoveResult;
 
 /**
  * An interface for the Chessman's Move.
@@ -8,5 +10,5 @@ import com.acme.chess.move.Move;
  *
  */
 public interface MoveValidator {
-    Boolean validate(Move move);
+    MoveResult validate(Move move) throws InvalidMoveException;
 }

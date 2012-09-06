@@ -14,7 +14,7 @@ import com.acme.chess.chessman.restricted.ChessmanColor;
 import com.acme.chess.chessman.restricted.ChessmanType;
 
 /**
- * Test for SimpleChessTable class.
+ * Test class for the SimpleChessTable class.
  * @author Istvan_Hever
  *
  */

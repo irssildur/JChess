@@ -12,6 +12,9 @@ import com.acme.chess.chessman.ChessmanFactory;
 import com.acme.chess.chessman.restricted.ChessmanColor;
 import com.acme.chess.chessman.restricted.ChessmanType;
 import com.acme.chess.chesstable.api.ChessTable;
+import com.acme.chess.chesstable.restricted.exceptions.DestinationIsNotFreeException;
+import com.acme.chess.chesstable.restricted.exceptions.OutOfTableException;
+import com.acme.chess.move.InvalidMoveException;
 import com.acme.chess.move.Move;
 import com.acme.chess.move.MoveResult;
 
@@ -44,14 +47,56 @@ public class SimpleChessTable implements ChessTable {
         logger.info(" *** Filling table with chessman has finished *** ");
     }
 
-    public MoveResult doMove(Move move) {
-        checkIfDestionationIsFree(move);
-        move.getChessman().validate(move);
+    /**
+     * Try to do the move. If it's possible or impossible, the function returns a proper MoveResult objcet.
+     * @param move the Move object.
+     */
+    public MoveResult doMove(Move move) throws OutOfTableException {
+
+        try {
+
+            isOutOfTable(move);
+            checkIfDestionationIsFree(move);
+
+            Chessman chessman = move.getChessman();
+            MoveResult moveResult = chessman.validate(move);
+
+            if (isMoveAKill() && moveResult == MoveResult.validIfKill) {
+
+            } else if (isMoveFirstmove() && moveResult == MoveResult.validIfFirstMove) {
+
+            }
+            
+        } catch (OutOfTableException e) {
+            // TODO: handle exception
+        } catch (DestinationIsNotFreeException e) {
+            // TODO: handle exception
+        } catch (InvalidMoveException e) {
+            // TODO: handle exception
+        }
+
         // TODO finish this
         return null;
     }
 
-    private Boolean checkIfDestionationIsFree(Move move) {
+    private void isOutOfTable(Move move) throws OutOfTableException {
+        if (move.getToX() > TABLE_SIZE || move.getToY() > TABLE_SIZE || move.getToX() < 0 || move.getToY() < 0) {
+            throw new OutOfTableException(String.format("Move is out of table: x:%s, y:%s", move.getToX(), move.getToY()));
+        }
+
+    }
+
+    private boolean isMoveFirstmove() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    private boolean isMoveAKill() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    private Boolean checkIfDestionationIsFree(Move move) throws DestinationIsNotFreeException {
         Boolean isFree = true;
         if (table[move.getToX()][move.getToY()] != null) {
             isFree = false;
